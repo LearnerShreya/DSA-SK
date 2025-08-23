@@ -5,6 +5,22 @@
 ![alt text](image-1.png)
 
 ---
+---
+
+### Practical Usage of Time Complexities
+
+| **Case** | **Input Size (n)** | **Feasible Time Complexity** | **Remarks / Typical Use**                                  |
+| -------- | ------------------ | ---------------------------- | ---------------------------------------------------------- |
+| 1        | n > 10^9           | O(log n), O(1)               | Very large inputs → only logarithmic / constant acceptable |
+| 2        | n ≤ 10^8           | O(n)                         | Linear scan / traversal possible                           |
+| 3        | n ≤ 10^6           | O(n log n)                   | Sorting, efficient algorithms                              |
+| 4        | n ≤ 10^4           | O(n^2)                       | Quadratic algorithms acceptable                            |
+| 5        | n ≤ 500            | O(n^3)                       | Triple nested loops feasible                               |
+| 6        | n ≤ 25             | O(2^n)                       | Recursion / brute force (subset problems)                  |
+| 7        | n ≤ 12             | O(n!)                        | Factorial complexity (permutations, backtracking)          |
+
+---
+---
 
 ## **1. Introduction**
 
