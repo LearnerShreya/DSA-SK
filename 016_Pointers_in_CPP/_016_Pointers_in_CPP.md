@@ -420,6 +420,90 @@ delete[] arr;   // free array
 
 👉 If you forget `delete`, you cause a **memory leak**.
 
+### Step-by-step Dry Run:
+
+#### Step 1: `int* arr = new int[5];`
+
+* `new int[5]` allocates **5 integers** on the heap.
+* Memory (heap): `[ ?, ?, ?, ?, ? ]` (5 slots created, garbage values initially).
+* Stack: variable `arr` points to the **first slot** in the heap.
+
+#### Step 2: `for (int i = 0; i < 5; i++) arr[i] = i+1;`
+
+* Iteration 1 (i=0): `arr[0] = 1` → Heap: `[1, ?, ?, ?, ?]`
+* Iteration 2 (i=1): `arr[1] = 2` → Heap: `[1, 2, ?, ?, ?]`
+* Iteration 3 (i=2): `arr[2] = 3` → Heap: `[1, 2, 3, ?, ?]`
+* Iteration 4 (i=3): `arr[3] = 4` → Heap: `[1, 2, 3, 4, ?]`
+* Iteration 5 (i=4): `arr[4] = 5` → Heap: `[1, 2, 3, 4, 5]`
+
+#### Step 3: `for (int i = 0; i < 5; i++) cout << arr[i] << " ";`
+
+* Iteration 1: prints `1`
+* Iteration 2: prints `2`
+* Iteration 3: prints `3`
+* Iteration 4: prints `4`
+* Iteration 5: prints `5`
+
+👉 Output so far:
+
+```
+1 2 3 4 5
+```
+
+#### Step 4: `delete[] arr;`
+
+* Frees the 5 integers from the heap.
+* Now the memory is released back to the system.
+* `arr` becomes a **dangling pointer** (it still stores an address, but that address is invalid to use).
+
+### Final State:
+
+* Output: `1 2 3 4 5`
+* Heap: memory freed
+* Stack: `arr` still exists, but should not be used anymore
+
+⚠️ If tried to access `arr` after `delete[] arr`, the program may crash or give **undefined behavior**.
+
+---
+
+## 🔹 Normal Array vs Dynamic Array (`new`)
+
+1. **Normal Array**
+
+   * Declared like: `int arr[5];`
+   * Memory goes in **stack**.
+   * Size must be **fixed at compile time**.
+   * Destroyed automatically when scope ends (no need to free).
+   * Safer, simpler, but less flexible.
+
+2. **Dynamic Array using `new`**
+
+   * Declared like: `int* arr = new int[5];`
+   * Memory goes in **heap**.
+   * Size can be **decided at runtime**.
+   * Must be manually freed with `delete[] arr;` (otherwise memory leak).
+   * Useful for **big data** and when lifetime should go beyond scope.
+
+### 🔹 Why use `new`?
+
+* When array size is **not known at compile time** (e.g., user input).
+* When you need **large memory** (heap is bigger than stack).
+* When you want **control of lifetime** (memory should survive after function ends).
+* When building **dynamic data structures** like linked lists, trees, graphs.
+
+
+### 🔹 Risks of using `new`
+
+* Forgetting `delete[]` causes **memory leak**.
+* Accessing freed memory causes **undefined behavior**.
+* That’s why modern C++ recommends using `std::vector` or **smart pointers** instead of raw `new`.
+
+✅ **In one line:**
+
+* Use **normal arrays** when size is small and known in advance.
+* Use **`new`** when size is dynamic, large, or needs flexible lifetime, but remember to `delete[]` after use.
+
+---
 ---
 
 ## 🔹 2. Void Pointer
