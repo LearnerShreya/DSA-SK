@@ -677,7 +677,7 @@ int* const q = &y;   // const pointer (address can’t change)
 ---
 ---
 
-# 📘 Pointers in C++ (Part 3 – Smart Pointers, Pitfalls & Cheat Sheet)
+# 📘 Part 3 – Smart Pointers, Pitfalls & Cheat Sheet
 
 ---
 
