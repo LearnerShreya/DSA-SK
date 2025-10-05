@@ -1,43 +1,54 @@
-# Majority Element Pair Sum
+# **Majority Element & Pair Sum**
 
 ---
 
 ## **1. Majority Element**
 
-**📌 Problem:**
-Find the element that appears **more than ⌊n/2⌋ times** in the array.
+### 📌 Problem
 
----
+Find the element that appears **more than ⌊n/2⌋ times** in an array.
 
-### **Best Approach – Moore’s Voting Algorithm**
-
-**Idea:** Cancel out different elements, majority survives.
-
-**Steps:**
-
-1. Start with `count = 0`, `candidate = None`.
-2. For each element:
-
-   * If `count == 0` → pick current as candidate.
-   * If same as candidate → `count++`, else `count--`.
-3. Candidate will be the majority element.
-
----
-
-**Dry Run Example:**
+**Example:**
 
 ```
 nums = [2, 2, 1, 1, 1, 2, 2]
-n/2 = 3
-
-Step-by-step:
-2 (c=1), 2 (c=2), 1 (c=1), 1 (c=0), 1 (c=1), 2 (c=0), 2 (c=1)
-Candidate = 2
+Majority element = 2
 ```
 
 ---
 
-**C++ Code (O(n), O(1)):**
+### 💡 Best Approach – Moore’s Voting Algorithm
+
+**Idea:** Cancel out different elements; the majority element survives.
+
+**Steps:**
+
+1. Initialize `candidate = None`, `count = 0`.
+2. For each element:
+
+   * If `count == 0` → pick current element as `candidate`.
+   * If element == `candidate` → `count++`, else `count--`.
+3. At the end, `candidate` is the majority element.
+
+---
+
+### ⚡ Dry Run Example
+
+| Element | Count | Candidate |
+| ------- | ----- | --------- |
+| 2       | 1     | 2         |
+| 2       | 2     | 2         |
+| 1       | 1     | 2         |
+| 1       | 0     | 2 → reset |
+| 1       | 1     | 1         |
+| 2       | 0     | 1 → reset |
+| 2       | 1     | 2         |
+
+**Majority Element = 2**
+
+---
+
+### 🖥 C++ Code (O(n), O(1))
 
 ```cpp
 #include <bits/stdc++.h>
@@ -49,7 +60,7 @@ int majorityElement(vector<int>& nums) {
         if (count == 0) candidate = num;
         count += (num == candidate) ? 1 : -1;
     }
-    return candidate; // Majority guaranteed to exist
+    return candidate;
 }
 
 int main() {
@@ -58,7 +69,9 @@ int main() {
 }
 ```
 
-**Python Code (O(n), O(1)):**
+---
+
+### 🐍 Python Code (O(n), O(1))
 
 ```python
 def majorityElement(nums):
@@ -67,7 +80,7 @@ def majorityElement(nums):
         if count == 0:
             candidate = num
         count += 1 if num == candidate else -1
-    return candidate  # Majority guaranteed to exist
+    return candidate
 
 nums = [2, 2, 1, 1, 1, 2, 2]
 print(majorityElement(nums))  # Output: 2
@@ -75,40 +88,56 @@ print(majorityElement(nums))  # Output: 2
 
 ---
 
+### ✅ Key Takeaways
+
+* Majority element survives cancellation.
+* Works in **O(n) time** and **O(1) space**.
+* Guaranteed to find majority if it exists.
+
+---
+
 ## **2. Pair Sum**
 
-**📌 Problem:**
-Check if any pair in the array sums to a given target.
+### 📌 Problem
 
----
+Check if **any pair in the array sums to a given target**.
 
-### **Best Approach – Hash Set** (for unsorted array)
-
-**Steps:**
-
-1. Initialize empty set.
-2. For each element:
-
-   * Calculate `need = target - num`.
-   * If `need` in set → Pair found.
-   * Else insert `num`.
-
----
-
-**Dry Run Example:**
+**Example:**
 
 ```
 arr = [8, 4, 1, 6], target = 10
-Set = {}
-8 → need 2 → not found → add 8
-4 → need 6 → not found → add 4
-1 → need 9 → not found → add 1
-6 → need 4 → found → YES
+Pair found: 4 + 6
 ```
 
 ---
 
-**C++ Code (O(n), O(n)):**
+### 💡 Best Approach – Hash Set (Unsorted Array)
+
+**Idea:** Use a set to store seen elements and check for the complement.
+
+**Steps:**
+
+1. Initialize empty set `seen = {}`.
+2. For each element `num` in array:
+
+   * `need = target - num`
+   * If `need in seen` → Pair exists
+   * Else → Add `num` to `seen`
+
+---
+
+### ⚡ Dry Run Example
+
+| Element | need | Seen Set  | Pair Found? |
+| ------- | ---- | --------- | ----------- |
+| 8       | 2    | {8}       | No          |
+| 4       | 6    | {8,4}     | No          |
+| 1       | 9    | {8,4,1}   | No          |
+| 6       | 4    | {8,4,1,6} | Yes         |
+
+---
+
+### 🖥 C++ Code (O(n), O(n))
 
 ```cpp
 #include <bits/stdc++.h>
@@ -130,7 +159,9 @@ int main() {
 }
 ```
 
-**Python Code (O(n), O(n)):**
+---
+
+### 🐍 Python Code (O(n), O(n))
 
 ```python
 def hasPairSum(arr, target):
@@ -148,13 +179,22 @@ print("YES" if hasPairSum(arr, target) else "NO")  # Output: YES
 
 ---
 
-## **⏳ Complexity Summary**
+### 💡 Optional: Two Pointer (Sorted Array)
 
-| Problem             | Best Approach  | Time | Space |
+* If array is sorted, use **two pointers `i=0`, `j=n-1`**:
+
+  * Sum < target → move `i++`
+  * Sum > target → move `j--`
+* Time: O(n), Space: O(1)
+
+---
+
+### ⏳ Complexity Summary
+
+| Problem             | Approach       | Time | Space |
 | ------------------- | -------------- | ---- | ----- |
 | Majority Element    | Moore’s Voting | O(n) | O(1)  |
 | Pair Sum (Unsorted) | Hash Set       | O(n) | O(n)  |
 | Pair Sum (Sorted)   | Two Pointer    | O(n) | O(1)  |
 
 ---
-
