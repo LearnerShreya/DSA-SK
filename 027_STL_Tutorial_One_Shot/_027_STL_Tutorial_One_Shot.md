@@ -1,2 +1,0 @@
-# STL Tutorial One Shot
-
