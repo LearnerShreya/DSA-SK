@@ -201,14 +201,15 @@ It doesn’t count the null character itself.
 
 ## 5. COMMON C-STRING FUNCTIONS (from `<cstring>`)
 
-| Function                             | Purpose                        | Example                                         | Result           |
-| ------------------------------------ | ------------------------------ | ----------------------------------------------- | ---------------- |
-| `strlen(str)`                        | Returns string length          | `strlen("hello")`                               | `5`              |
-| `strcpy(dest, src)`                  | Copies `src` into `dest`       | `strcpy(a, b)`                                  | a = b            |
-| `strcat(a, b)`                       | Concatenates b after a         | `strcat("Apna ", "College")`                    | `"Apna College"` |
-| `strcmp(a, b)`                       | Compares two strings           | returns `0` if same                             |                  |
-| `strchr(str, ch)`                    | Finds first occurrence of `ch` | `strchr("apple", 'p')` → pointer to first `'p'` |                  |
-| `strrev(str)` *(compiler dependent)* | Reverses the string            | `"abc"` → `"cba"`                               |                  |
+| **Function**                         | **Purpose**                                                    | **Example**                                | **Result / Return Value**                                                |
+| ------------------------------------ | -------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
+| `strlen(str)`                        | Returns the **length** of the string (excluding `'\0'`)        | `strlen("hello")`                          | `5`                                                                      |
+| `strcpy(dest, src)`                  | Copies **source string** (`src`) into **destination** (`dest`) | `strcpy(a, "world")`                       | `a` becomes `"world"`                                                    |
+| `strcat(a, b)`                       | Appends string `b` **to the end** of string `a`                | `strcat(a, "College")` where `a = "Apna "` | `"Apna College"`                                                         |
+| `strcmp(a, b)`                       | **Compares** two strings lexicographically                     | `strcmp("apple", "apple")`                 | Returns `0` (same) <br> Returns `<0` if a < b <br> Returns `>0` if a > b |
+| `strchr(str, ch)`                    | Finds the **first occurrence** of character `ch`               | `strchr("apple", 'p')`                     | Pointer to first `'p'` (→ `"pple"`)                                      |
+| `strrev(str)` *(compiler dependent)* | **Reverses** the given string                                  | `strrev("abc")`                            | `"cba"`                                                                  |
+
 
 Example:
 
@@ -219,6 +220,19 @@ char s2[] = "College";
 strcat(s1, s2);
 cout << s1;  // ApnaCollege
 ```
+
+
+| **Expression**      | **Meaning**                                  | **Example**                 | **Result**                 |
+| ------------------- | -------------------------------------------- | --------------------------- | -------------------------- |
+| `strcmp(a, b) == 0` | Both strings are **exactly the same**        | `strcmp("apple", "apple")`  | `0`                        |
+| `strcmp(a, b) < 0`  | `a` comes **before** `b` in dictionary order | `strcmp("apple", "banana")` | negative value (like `-1`) |
+| `strcmp(a, b) > 0`  | `a` comes **after** `b` in dictionary order  | `strcmp("mango", "apple")`  | positive value (like `1`)  |
+
+So in short:
+
+* `0` → strings are equal
+* negative → first string is smaller (alphabetically before)
+* positive → first string is greater (alphabetically after)
 
 ---
 
@@ -274,14 +288,14 @@ s = "Hello"; // ❌ invalid
 
 ### 7.3 Basic Operations
 
-| Operation        | Syntax                       | Example               | Result                 |
-| ---------------- | ---------------------------- | --------------------- | ---------------------- |
-| Print            | `cout << s;`                 |                       | Prints string          |
-| Input (one word) | `cin >> s;`                  | Input: "Apna College" | Output: "Apna"         |
-| Input (sentence) | `getline(cin, s);`           | Input: "Apna College" | Output: "Apna College" |
-| Length           | `s.length()` or `s.size()`   | `"Hello"` → `5`       |                        |
-| Reassign         | `s = "New";`                 | Changes value         |                        |
-| Concatenate      | `s1 + s2` or `s1.append(s2)` | `"Apna" + "College"`  | `"ApnaCollege"`        |
+| **Operation**        | **Syntax**                   | **Example**                       | **Result / Output**                   |
+| -------------------- | ---------------------------- | --------------------------------- | ------------------------------------- |
+| **Print**            | `cout << s;`                 | `string s = "Hello"; cout << s;`  | Prints `Hello`                        |
+| **Input (one word)** | `cin >> s;`                  | Input: `Apna College`             | Stores only `Apna`                    |
+| **Input (sentence)** | `getline(cin, s);`           | Input: `Apna College`             | Stores entire line → `"Apna College"` |
+| **Length**           | `s.length()` or `s.size()`   | `string s = "Hello"; s.length();` | Returns `5`                           |
+| **Reassign**         | `s = "New";`                 | If `s = "Old"; s = "New";`        | Changes value of `s` to `"New"`       |
+| **Concatenate**      | `s1 + s2` or `s1.append(s2)` | `"Apna" + "College"`              | `"ApnaCollege"`                       |
 
 ---
 
